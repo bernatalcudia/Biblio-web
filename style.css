@@ -1,0 +1,14 @@
+* {
+    margin: 0;
+    box-sizing: border-box;
+}
+header {
+    background-color: #896998;
+    display: flex;
+    flex-flow: row wrap;
+}
+
+.headerLogo {
+    width: 50px;
+    height: 50px;
+}
