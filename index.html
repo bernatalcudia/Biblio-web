@@ -1,21 +1,44 @@
 <!DOCTYPE html>
-<html lang="en">
+<html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title></title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title></title>
-    <link rel="stylesheet" href="style.css">
-</head>
-
-<body>
-    <header>
-
-    </header>
-    <main id="mainpage">
-
-    </main>
-    <script src="script.js"></script>
-</body>
-
+    <body>
+        <header>
+            <section class="corpoSection">
+                <img class="headerLogo" src="imgs/logo.webp" />
+                <h1>JACKALBOOKS</h1>
+            </section>
+            <div id="secondHeader" class="searchBox">
+                <input
+                    id="inputSearch"
+                    type="search"
+                    placeholder="Busca tu libro/Autor aqui..."
+                />
+                <form>
+                    <input
+                        class="filter"
+                        name="filterRadio"
+                        type="radio"
+                        checked
+                    />Titulo
+                    <input
+                        class="filter"
+                        name="filterRadio"
+                        type="radio"
+                    />Autor
+                </form>
+                <button id="searchButton"></button>
+            </div>
+            <button id="buyButton" class="cartBtn"></button>
+        </header>
+        <main id="mainpage">
+            
+        </main>
+        <script src="script.js"></script>
+    </body>
 </html>

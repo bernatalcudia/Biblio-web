@@ -1,5 +1,6 @@
-const API_URL = "https://openlibrary.org/search.json?author=r+r+martin&limit=10";
-const API_BOOKS_IMGS = "https://covers.openlibrary.org/b/id/"
+const API_URL =
+    "https://openlibrary.org/search.json?author=r+r+martin&limit=10";
+const API_BOOKS_IMGS = "https://covers.openlibrary.org/b/id/";
 
 /* Search parameters:
 
@@ -20,28 +21,26 @@ let pages = {
     next: "",
 };
 
-
-const gridBooks = document.getElementById("mainpage")
+const gridBooks = document.getElementById("mainpage");
 
 showBooks();
 
-function showBooks(){
+function showBooks() {
     fetch(pages.current)
-    .then((response) => response.json())
-    .then((data) => {
-        data.docs.forEach(book => {
-            console.log(book);
-            createBookCard(book);
-        });
-    })
+        .then((response) => response.json())
+        .then((data) => {
+            data.docs.forEach((book) => {
+                console.log(book);
+                createBookCard(book);
+            });
+        })
 
-    .catch((error) => {
-        console.error("Error en la solicitud:", error);
-    });
+        .catch((error) => {
+            console.error("Error en la solicitud:", error);
+        });
 }
 
-
-async function createBookCard(book){
+async function createBookCard(book) {
     const bookBox = document.createElement("article");
     bookBox.setAttribute("class", "bookBox");
 
@@ -65,7 +64,6 @@ async function createBookCard(book){
     bookBox.append(bookName, bookAuthor, bookYear);
     gridBooks.append(bookBox);
 }
-
 
 // function searchBookImage(bookCoverId, bookCover){
 //     return fetch(`${API_BOOKS_IMGS}${bookCoverId}-S.jpg`)
