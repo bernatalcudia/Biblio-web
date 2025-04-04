@@ -85,7 +85,7 @@ function addBookToCart(bookID){
 
         userCart.forEach(book => {
             if (book.bookname !== bookID){
-                book.quantity + 1;
+                book.quantity += 1;
 
                 localStorage.setItem("usercart", JSON.stringify(userCart));
             }
