@@ -1,7 +1,14 @@
-const API_URL = "https://openlibrary.org/search.json?author=r+r+martin&limit=25";
+const API_URL = "https://openlibrary.org/search.json?author=r+r+martin&limit=24";
 const API_BOOK_IMG = "https://covers.openlibrary.org/b/id/"
 const inputSearch = document.getElementById("inputSearch");
 
+const openCart = document.getElementById("buyButton");
+openCart.addEventListener("click", openCartPage);
+const closeCart = document.getElementById("closeCart");
+closeCart.addEventListener("click", closeCartPage);
+
+const cartBox = document.getElementById("cartBox");
+cartBox.style.display = "none";
 
 
 /* Search parameters:
@@ -114,4 +121,12 @@ function addBookToCart(bookID) {
     //         }
     //     });
     // }
+}
+
+function openCartPage() {
+    cartBox.style.display = "flex";
+}
+
+function closeCartPage() {
+    cartBox.style.display = "none";
 }
