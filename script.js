@@ -1,4 +1,4 @@
-const API_URL = "https://openlibrary.org/search.json?author=r+r+martin&limit=10";
+const API_URL = "https://openlibrary.org/search.json?author=r+r+martin&limit=25";
 const API_BOOK_IMG = "https://covers.openlibrary.org/b/id/"
 const inputSearch = document.getElementById("inputSearch");
 
@@ -53,6 +53,9 @@ function createBookCard(book){
     const bookCover = document.createElement("img");
     bookCover.src = bookCoverURL;
 
+    const bookInfo = document.createElement("section");
+    bookInfo.setAttribute("class", "bookInfo");
+
     const bookName = document.createElement("h3");
     bookName.innerText = `${book.title}`;
     const bookAuthor = document.createElement("p");
@@ -66,7 +69,8 @@ function createBookCard(book){
     addCartBtn.innerText = "Añadir al carrito";
     addCartBtn.addEventListener("click", () => addBookToCart(addCartBtn.id));
 
-    bookBox.append(bookCover, bookName, bookAuthor, bookYear, addCartBtn);
+    bookInfo.append(bookName, bookAuthor, bookYear, addCartBtn);
+    bookBox.append(bookCover, bookInfo);
     gridBooks.append(bookBox);
 }
 
