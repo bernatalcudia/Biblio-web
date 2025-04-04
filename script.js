@@ -2,7 +2,6 @@ const API_URL = "https://openlibrary.org/search.json?author=r+r+martin&limit=25"
 const API_BOOK_IMG = "https://covers.openlibrary.org/b/id/"
 const inputSearch = document.getElementById("inputSearch");
 
-const cartBooks = [];
 
 
 /* Search parameters:
@@ -29,23 +28,23 @@ const gridBooks = document.getElementById("mainpage")
 
 showBooks();
 
-function showBooks(){
+function showBooks() {
     fetch(pages.current)
-    .then((response) => response.json())
-    .then((data) => {
-        data.docs.forEach(book => {
-            console.log(book);
-            createBookCard(book);
-        });
-    })
+        .then((response) => response.json())
+        .then((data) => {
+            data.docs.forEach(book => {
+                console.log(book);
+                createBookCard(book);
+            });
+        })
 
-    .catch((error) => {
-        console.error("Error en la solicitud:", error);
-    });
+        .catch((error) => {
+            console.error("Error en la solicitud:", error);
+        });
 }
 
 
-function createBookCard(book){
+function createBookCard(book) {
     const bookBox = document.createElement("article");
     bookBox.setAttribute("class", "bookBox");
 
@@ -74,29 +73,45 @@ function createBookCard(book){
     gridBooks.append(bookBox);
 }
 
-function addBookToCart(bookID){
-    const addBook = {
-        bookname: bookID,
-        quantity: 1
-    };
+function addBookToCart(bookID) {
 
-    if (!localStorage.getItem("usercart")){
-        cartBooks.push(addBook);
-        localStorage.setItem("usercart", JSON.stringify(cartBooks));
+    let userCart = localStorage.getItem("usercart")
+
+    let cartBooks = userCart ? JSON.parse(userCart) : [];
+
+    const bookIndexArray = cartBooks.findIndex(book => book.bookname === bookID) //Retorna su indice y si no lo encuentra devulve un -1
+
+    if (bookIndexArray > -1) {
+        cartBooks[bookIndexArray].quantity += 1
+    } else {
+        const addBook = {
+            bookname: bookID,
+            quantity: 1
+        };
+        cartBooks.push(addBook)
     }
-    else{
-        const userCart = JSON.parse(localStorage.getItem("usercart"));
 
-        userCart.forEach(book => {
-            if (book.bookname !== bookID){
-                book.quantity += 1;
+    localStorage.setItem("usercart", JSON.stringify(cartBooks))
 
-                localStorage.setItem("usercart", JSON.stringify(userCart));
-            }
-            else{
-                userCart.push(addBook);
-                localStorage.setItem("usercart", JSON.stringify(userCart));
-            }
-        });
-    }
+
+    console.log("cart update", cartBooks)
+    // if (!localStorage.getItem("usercart")) {
+    //     cartBooks.push(addBook);
+    //     localStorage.setItem("usercart", JSON.stringify(cartBooks));
+    // }
+    // else {
+    //     const userCart = JSON.parse(localStorage.getItem("usercart"));
+
+    //     userCart.forEach(book => {
+    //         if (book.bookname !== bookID) {
+    //             book.quantity += 1;
+
+    //             localStorage.setItem("usercart", JSON.stringify(userCart));
+    //         }
+    //         else {
+    //             userCart.push(addBook);
+    //             localStorage.setItem("usercart", JSON.stringify(userCart));
+    //         }
+    //     });
+    // }
 }
