@@ -16,11 +16,11 @@
         </section>
         <div id="searchSection" class="searchBox">
             <input id="inputSearch" type="search" placeholder="Busca tu libro/Autor aqui..." />
-            <form>
+            <button id="searchButton"></button>
+            <form id="filterForm">
                 <input class="filter" name="filterRadio" type="radio" checked />Titulo
                 <input class="filter" name="filterRadio" type="radio" />Autor
             </form>
-            <button id="searchButton"></button>
         </div>
         <button id="buyButton" class="cartBtn"></button>
         <section id="cartBox" class="cartBox">
@@ -32,6 +32,13 @@
         </section>
     </header>
     <main id="mainpage">
+        <section class="booksGrid" id="booksGrid">
+        </section>
+        <section class="pageButtons" id="paginationButtons">
+            <button class="pageBut" id="prevB">
+                << Prev Page</button>
+                    <button class="pageBut" id="nextB">Next page >></button>
+        </section>
     </main>
     <script src="script.js"></script>
 </body>

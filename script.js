@@ -1,46 +1,63 @@
-const API_URL = "https://openlibrary.org/search.json?author=r+r+martin&limit=24";
+const API_URL = "https://openlibrary.org/search.json?";
 const API_BOOK_IMG = "https://covers.openlibrary.org/b/id/"
+
 const inputSearch = document.getElementById("inputSearch");
+const searchBtn = document.getElementById("searchButton");
+searchBtn.addEventListener("click", userSearch);
+const filterForm = document.getElementById("filterForm");
 
 const openCart = document.getElementById("buyButton");
 openCart.addEventListener("click", openCartPage);
 const closeCart = document.getElementById("closeCart");
 closeCart.addEventListener("click", closeCartPage);
 
+const gridBooks = document.getElementById("booksGrid");
 const cartBox = document.getElementById("cartBox");
-cartBox.style.display = "none";
 
+const titleSearch = "title=";
+const authorSearch = "author=";
+const booksLimitPage = "limit=24";
 
-/* Search parameters:
+let userInput;
+let numPage = 1;
+let userInputUrl;
 
-q : Solr query syntax
-title : Search for books by title
-author : Search for books by author
+async function userSearch(){
+    if (inputSearch.value == ""){
+        alert("No has introducido ningúna palabra");
+    }
+    else{
+        numPage = 1;
+        await transformUserInput();
+        
+        if (filterForm.filterRadio[0].checked){
+            userInputUrl = `${API_URL}${titleSearch}${userInput}`;
+        }
+        else if (filterForm.filterRadio[1].checked){
+            userInputUrl = `${API_URL}${authorSearch}${userInput}`;
+        }
 
-limit=10 : items limit/fetch
-page=numPage
+        showBooks();
+    }
 
-HOLA Y ADIÓS
+}
 
-*/
-
-let pages = {
-    current: `${API_URL}`,
-    prev: "",
-    next: "",
-};
-
-
-const gridBooks = document.getElementById("mainpage");
-
-showBooks();
+function transformUserInput(){
+    userInput = inputSearch.value.replaceAll(" ", "+");
+    return userInput;
+}
 
 function showBooks() {
-    fetch(pages.current)
+    fetch(`${userInputUrl}&page=${numPage}&${booksLimitPage}`)
         .then((response) => response.json())
         .then((data) => {
+            console.log(data);
+            
+            gridBooks.innerHTML = "";
+            disablePageButtons(data.docs.length);
+            upPage();
+
             data.docs.forEach(book => {
-                console.log(book);
                 createBookCard(book);
             });
         })
@@ -84,7 +101,7 @@ function createBookCard(book) {
 
 function addBookToCart(bookID, price, bookCoverURL) {
 
-    let userCart = localStorage.getItem("usercart")
+    let userCart = localStorage.getItem("usercart");
 
     let cartBooks = userCart ? JSON.parse(userCart) : [];
 
@@ -125,6 +142,48 @@ function addBookToCart(bookID, price, bookCoverURL) {
     //         }
     //     });
     // }
+}
+
+
+const nextPageButton = document.getElementById("nextB")
+nextPageButton.addEventListener("click", toNextPage);
+const prevPageButton = document.getElementById("prevB")
+prevPageButton.addEventListener("click", toPrevPage);
+const paginationButtonsVisibility = document.getElementById("paginationButtons").style;
+
+
+function toNextPage(){
+    numPage++;
+
+    showBooks();
+}
+
+function toPrevPage(){
+    numPage--;
+
+    showBooks();
+}
+
+function disablePageButtons(booksInPage){
+    paginationButtonsVisibility.visibility = "visible";
+
+    if (numPage == 1){
+        prevPageButton.setAttribute("disabled", true);
+    }
+    else{
+        prevPageButton.removeAttribute("disabled");
+    }
+
+    if (booksInPage < 24){
+        nextPageButton.setAttribute("disabled", true)
+    }
+    else{
+        nextPageButton.removeAttribute("disabled");
+    }
+}
+
+function upPage(){
+    window.scrollTo({top:0, behavior:"smooth"});
 }
 
 function openCartPage() {

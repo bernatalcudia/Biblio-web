@@ -103,6 +103,15 @@ main {
     gap: 1rem;
 }
 
+.booksGrid {
+    display: flex;
+    flex-flow: row wrap;
+    justify-content: space-evenly;
+
+
+    gap: 1rem;
+}
+
 .bookBox {
     width: 16%;
     min-width: 380px;
@@ -213,5 +222,35 @@ main {
     color: black;
 
     transition: 0.2s;
+}
+
+.pageButtons{
+    width: 100%;
+
+    display: flex;
+    justify-content: center;
+
+    gap: 1rem;
+    padding: 0.6rem;
+}
+
+.pageBut{
+    padding: 0.4rem;
+    margin-bottom: 1rem;
+    background-color: white;
+    font-weight: bolder;
+}
+
+.pageBut:hover{
+    background-color: black;
+    transform: scale(1.1);
+    transition: 0.4s;
+    
+    color: white;
+}
+
+.pageBut:disabled{
+    background-color: gray;
+    color: white;
 }
 
