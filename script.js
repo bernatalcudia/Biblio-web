@@ -31,7 +31,7 @@ let pages = {
 };
 
 
-const gridBooks = document.getElementById("mainpage")
+const gridBooks = document.getElementById("mainpage");
 
 showBooks();
 
@@ -55,32 +55,34 @@ function createBookCard(book) {
     const bookBox = document.createElement("article");
     bookBox.setAttribute("class", "bookBox");
 
-    const bookCoverURL = `${API_BOOK_IMG}${book.cover_i}-M.jpg`;
+    const bookCoverURL = `${API_BOOK_IMG}${book.cover_i}`;
     const bookCover = document.createElement("img");
-    bookCover.src = bookCoverURL;
+    bookCover.src = `${bookCoverURL}-M.jpg`;
 
     const bookInfo = document.createElement("section");
     bookInfo.setAttribute("class", "bookInfo");
 
     const bookName = document.createElement("h3");
     bookName.innerText = `${book.title}`;
-    const bookAuthor = document.createElement("p");
-    bookAuthor.innerText = `Autor: ${book.author_name[0]}`;
-    const bookYear = document.createElement("p");
-    bookYear.innerText = `Año de publicación: ${book.first_publish_year}`;
+    const bookAuthorYear = document.createElement("p");
+    bookAuthorYear.innerText = `${book.author_name[0]} (${book.first_publish_year})`;
+    const bookPrice =  document.createElement("p");
+    bookPrice.setAttribute("class", "bookPrice");
+    const price = Math.floor(Math.random() * (30 - 20 + 1) + 20)
+    bookPrice.innerText = `${price}€`;
 
     const addCartBtn = document.createElement("button");
     addCartBtn.setAttribute("class", "addCartBook");
     addCartBtn.setAttribute("id", book.title)
     addCartBtn.innerText = "Añadir al carrito";
-    addCartBtn.addEventListener("click", () => addBookToCart(addCartBtn.id));
+    addCartBtn.addEventListener("click", () => addBookToCart(addCartBtn.id, price, bookCoverURL));
 
-    bookInfo.append(bookName, bookAuthor, bookYear, addCartBtn);
+    bookInfo.append(bookName, bookAuthorYear, bookPrice, addCartBtn);
     bookBox.append(bookCover, bookInfo);
     gridBooks.append(bookBox);
 }
 
-function addBookToCart(bookID) {
+function addBookToCart(bookID, price, bookCoverURL) {
 
     let userCart = localStorage.getItem("usercart")
 
@@ -93,7 +95,9 @@ function addBookToCart(bookID) {
     } else {
         const addBook = {
             bookname: bookID,
-            quantity: 1
+            quantity: 1,
+            price: price,
+            cartimg: `${bookCoverURL}-S.jpg`
         };
         cartBooks.push(addBook)
     }

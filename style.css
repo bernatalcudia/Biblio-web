@@ -159,22 +159,9 @@ main {
     transition: 0.2s;
 }
 
-.titulo {
+.bookPrice{
     font-size: 1.2rem;
-    font-weight: bolder;
-    color: #2e014d; /* tono morado oscuro para mantener estilo */
-    margin-bottom: 8px;
-}
-
-.autor {
-    font-size: 1rem;
-    color: #555;
-}
-
-.year {
-    font-style: italic;
-    font-size: 1rem;
-    color: #555;
+    font-weight: bold;
 }
 
 #inputSearch::placeholder {
@@ -189,10 +176,9 @@ main {
     justify-content: flex-start;
     align-items: center;
 
-    top: 0;
-    right: 0;
+    top: 0px;
+    right: 0px;
     
-    width: 300px;
     height: 100vh;
 
     background-color: white;
