@@ -6,6 +6,7 @@ inputSearch.addEventListener("input", highlightSearchButton);
 const searchBtn = document.getElementById("searchButton");
 searchBtn.addEventListener("click", userSearch);
 const filterForm = document.getElementById("filterForm");
+filterForm.addEventListener("change", changeInputPlaceholder);
 
 const openCart = document.getElementById("buyButton");
 openCart.addEventListener("click", openCartPage);
@@ -180,6 +181,15 @@ function disablePageButtons(booksInPage){
     }
     else{
         nextPageButton.removeAttribute("disabled");
+    }
+}
+
+function changeInputPlaceholder(){
+    if (filterForm.filterRadio[0].checked){
+        inputSearch.placeholder = "Introduce el nombre del libro";
+    }
+    else if (filterForm.filterRadio[1].checked){
+        inputSearch.placeholder = "Introduce el nombre del autor";
     }
 }
 
