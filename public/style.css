@@ -71,6 +71,7 @@ h1 {
 }
 
 #inputSearch {
+    width: 200px;
     max-width: 600px;
     padding: 0.4rem;
 }
@@ -364,6 +365,17 @@ main {
 .pageBtn:disabled{
     background-color: gray;
     color: white;
+}
+#booksQuantity{
+    font-size: 8px;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
+}
+.numCartBooks{
+    align-items: flex-start;
+    display: flex;
+    flex-flow: row nowrap;
 }
 
 @media only screen and (max-width: 850px) { 

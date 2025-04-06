@@ -126,6 +126,8 @@ function addBookToCart(addCartID, price, bookCoverURL, bookID) {
             cartimg: `${bookCoverURL}-M.jpg`,
             id: bookID
         };
+        const disableCartBtn = document.getElementById(`${addCartID}`)
+        disableCartBtn.innerHTML = "Añadido";
         cartBooks.push(addBook)
     }
 
@@ -139,7 +141,8 @@ function insertCartBooks() {
     if (localStorage.getItem("usercart")) {
 
         const userCart = JSON.parse(localStorage.getItem("usercart"));
-
+        const booksQ = document.getElementById("booksQuantity");
+    booksQ.innerText = userCart.length;
         checkCartContent(userCart);
 
         cartUserBooks.innerHTML = "";
@@ -147,7 +150,7 @@ function insertCartBooks() {
             createBookCardCart(book);
         });
     }
-
+    
     calcPrice();
 }
 

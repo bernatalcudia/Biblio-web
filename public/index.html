@@ -1,56 +1,74 @@
 <!DOCTYPE html>
 <html lang="es">
+    <head>
+        <meta charset="UTF-8" />
+        <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+        <title>JackalBooks</title>
+        <link rel="stylesheet" href="style.css" />
+    </head>
 
-<head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title>JackalBooks</title>
-    <link rel="stylesheet" href="style.css" />
-</head>
-
-<body>
-    <header>
-        <section class="corpoSection">
-            <a href="index.html" class="logoLink"><img class="headerLogo" src="imgs/logo.png" /></a>
-            <h1>JACKALBOOKS</h1>
-        </section>
-        <section id="searchSection" class="searchBox">
-            <section class="searchInfo">
-                <input id="inputSearch" type="search" placeholder="Nombre del libro..." />
-                <form id="filterForm" class="filterForm">
-                    <input class="filter" name="filterRadio" type="radio" checked />Titulo
-                    <input class="filter" name="filterRadio" type="radio" />Autor
-                </form>
+    <body>
+        <header>
+            <section class="corpoSection">
+                <a href="index.html" class="logoLink"
+                    ><img class="headerLogo" src="imgs/logo.png"
+                /></a>
+                <h1>JACKALBOOKS</h1>
             </section>
-            <button id="searchButton"></button>
-        </section>
-        <button id="cartButton" class="cartBtn"></button>
-        <section id="cartBox" class="cartBox">
-            <section class="cartHeader">
-                <section class="cartTitle">
-                    <h2>Tu carrito</h2>
-                    <button id="closeCart" class="closeCart">X</button>
+            <section id="searchSection" class="searchBox">
+                <section class="searchInfo">
+                    <input
+                        id="inputSearch"
+                        type="search"
+                        placeholder="Nombre del libro..."
+                    />
+                    <form id="filterForm" class="filterForm">
+                        <input
+                            class="filter"
+                            name="filterRadio"
+                            type="radio"
+                            checked
+                        />Titulo
+                        <input
+                            class="filter"
+                            name="filterRadio"
+                            type="radio"
+                        />Autor
+                    </form>
                 </section>
-                <p class="cartEmpty" id="cartEmpty">Tu carrito esta vacio</p>
+                <button id="searchButton"></button>
             </section>
-            <section class="cartContent" id="cartContent">
+            <section class="numCartBooks">
+                <button id="cartButton" class="cartBtn"></button>
+                <p id="booksQuantity">0</p>
             </section>
-            <section class="cartFooter">
-                <h3 id="purchasePrice"></h3>
-                <button class="buyBtn" id="buyButton">Finalizar compra</button>
-            </section>
-        </section>
-    </header>
-    <main id="mainpage">
-        <section class="booksGrid" id="booksGrid">
-        </section>
-        <section class="pageBtnsSection" id="paginationButtons">
-            <button class="pageBtn" id="prevB">
-                << Prev Page</button>
-                    <button class="pageBtn" id="nextB">Next page >></button>
-        </section>
-    </main>
-    <script src="script.js"></script>
-</body>
 
+            <section id="cartBox" class="cartBox">
+                <section class="cartHeader">
+                    <section class="cartTitle">
+                        <h2>Tu carrito</h2>
+                        <button id="closeCart" class="closeCart">X</button>
+                    </section>
+                    <p class="cartEmpty" id="cartEmpty">
+                        Tu carrito esta vacio
+                    </p>
+                </section>
+                <section class="cartContent" id="cartContent"></section>
+                <section class="cartFooter">
+                    <h3 id="purchasePrice"></h3>
+                    <button class="buyBtn" id="buyButton">
+                        Finalizar compra
+                    </button>
+                </section>
+            </section>
+        </header>
+        <main id="mainpage">
+            <section class="booksGrid" id="booksGrid"></section>
+            <section class="pageBtnsSection" id="paginationButtons">
+                <button class="pageBtn" id="prevB"><< Prev Page</button>
+                <button class="pageBtn" id="nextB">Next page >></button>
+            </section>
+        </main>
+        <script src="script.js"></script>
+    </body>
 </html>
