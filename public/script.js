@@ -142,7 +142,7 @@ function insertCartBooks() {
 
         const userCart = JSON.parse(localStorage.getItem("usercart"));
         const booksQ = document.getElementById("booksQuantity");
-    booksQ.innerText = userCart.length;
+        booksQ.innerText = userCart.length;
         checkCartContent(userCart);
 
         cartUserBooks.innerHTML = "";
@@ -274,6 +274,10 @@ function buyBooks(){
     }
     else{
         alert(`Gracias por tu compra, tu total es de ${purchasePrice.innerText}`);
+        let userCart = JSON.parse(localStorage.getItem("usercart"));
+        userCart=[];
+        localStorage.setItem("usercart", JSON.stringify(userCart));
+        insertCartBooks();
     }
 }
 
