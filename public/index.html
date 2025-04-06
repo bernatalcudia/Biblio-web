@@ -4,7 +4,7 @@
 <head>
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <title></title>
+    <title>JackalBooks</title>
     <link rel="stylesheet" href="style.css" />
 </head>
 
@@ -14,14 +14,16 @@
             <a href="index.html" class="logoLink"><img class="headerLogo" src="imgs/logo.png" /></a>
             <h1>JACKALBOOKS</h1>
         </section>
-        <div id="searchSection" class="searchBox">
-            <input id="inputSearch" type="search" placeholder="Introduce el nombre del libro" />
+        <section id="searchSection" class="searchBox">
+            <section class="searchInfo">
+                <input id="inputSearch" type="search" placeholder="Nombre del libro..." />
+                <form id="filterForm" class="filterForm">
+                    <input class="filter" name="filterRadio" type="radio" checked />Titulo
+                    <input class="filter" name="filterRadio" type="radio" />Autor
+                </form>
+            </section>
             <button id="searchButton"></button>
-            <form id="filterForm">
-                <input class="filter" name="filterRadio" type="radio" checked />Titulo
-                <input class="filter" name="filterRadio" type="radio" />Autor
-            </form>
-        </div>
+        </section>
         <button id="cartButton" class="cartBtn"></button>
         <section id="cartBox" class="cartBox">
             <section class="cartHeader">
@@ -35,7 +37,7 @@
             </section>
             <section class="cartFooter">
                 <h3 id="purchasePrice"></h3>
-                <button class="buyButton" id="buyButton">Finalizar compra</button>
+                <button class="buyBtn" id="buyButton">Finalizar compra</button>
             </section>
         </section>
     </header>

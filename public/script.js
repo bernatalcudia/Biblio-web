@@ -313,10 +313,10 @@ function disablePageButtons(booksInPage){
 
 function changeInputPlaceholder(){
     if (filterForm.filterRadio[0].checked){
-        inputSearch.placeholder = "Introduce el nombre del libro";
+        inputSearch.placeholder = "Nombre del libro...";
     }
     else if (filterForm.filterRadio[1].checked){
-        inputSearch.placeholder = "Introduce el nombre del autor";
+        inputSearch.placeholder = "Nombre del autor...";
     }
 }
 

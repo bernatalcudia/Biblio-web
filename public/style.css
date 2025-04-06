@@ -12,10 +12,10 @@ body {
 header {    
     display: flex;
     flex-flow: wrap;
-    justify-content: space-around;
+    justify-content: space-evenly;
     align-items: center;
 
-    padding: 0.4rem;
+    padding: 1rem;
     background-color: white;
 
     position: sticky;
@@ -51,21 +51,28 @@ h1 {
 }
 
 .searchBox {
-    width: auto;
+    display: flex;
+    flex-flow: row nowrap;
+    justify-content: center;
+    align-items: center;
 
+
+
+    gap: 1rem;
+}
+
+.searchInfo {
     display: flex;
     flex-flow: row nowrap;
     justify-content: center;
     align-items: center;
 
     gap: 1rem;
-    flex-grow: 1;
 }
 
-input {
-    max-width: 800px;
+#inputSearch {
+    max-width: 600px;
     padding: 0.4rem;
-    flex-grow: 1;
 }
 
 #searchButton {
@@ -104,19 +111,15 @@ input {
     transition: 0.4s;
 }
 
-.buyButton {
+.buyBtn {
     padding: 0.4rem;
     font-weight: bold;
 }
 
-.buyButton:hover {
+.buyBtn:hover {
     background-color: #efa54c;
 }
 
-.logoTittle {
-    width: 90px;
-    height: 90px;
-}
 
 main {
     display: flex;
@@ -375,6 +378,12 @@ main {
     .headerLogo{
         width: 60px;
         height: 60px;
+    }
+
+    .searchInfo{
+        flex-flow: column wrap;
+
+        gap: 0.4rem;
     }
 
     .cartBtn{
