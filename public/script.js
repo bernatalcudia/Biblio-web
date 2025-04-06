@@ -2,6 +2,7 @@ const API_URL = "https://openlibrary.org/search.json?";
 const API_BOOK_IMG = "https://covers.openlibrary.org/b/id/"
 
 const inputSearch = document.getElementById("inputSearch");
+inputSearch.addEventListener("input", highlightSearchButton);
 const searchBtn = document.getElementById("searchButton");
 searchBtn.addEventListener("click", userSearch);
 const filterForm = document.getElementById("filterForm");
@@ -179,6 +180,15 @@ function disablePageButtons(booksInPage){
     }
     else{
         nextPageButton.removeAttribute("disabled");
+    }
+}
+
+function highlightSearchButton(){
+    if (inputSearch.value == "") {
+        searchBtn.classList.remove("searchButtonReady");
+    }
+    else {
+        searchBtn.classList.add("searchButtonReady");
     }
 }
 
