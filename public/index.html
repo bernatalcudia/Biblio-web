@@ -22,22 +22,30 @@
                 <input class="filter" name="filterRadio" type="radio" />Autor
             </form>
         </div>
-        <button id="buyButton" class="cartBtn"></button>
+        <button id="cartButton" class="cartBtn"></button>
         <section id="cartBox" class="cartBox">
             <section class="cartHeader">
-                <h2>Tu carrito</h2>
-                <button id="closeCart" class="closeCart">X</button>
+                <section class="cartTitle">
+                    <h2>Tu carrito</h2>
+                    <button id="closeCart" class="closeCart">X</button>
+                </section>
+                <p class="cartEmpty" id="cartEmpty">Tu carrito esta vacio</p>
             </section>
-            <button id="buyButton">Comprar libros</button>
+            <section class="cartContent" id="cartContent">
+            </section>
+            <section class="cartFooter">
+                <h3 id="purchasePrice"></h3>
+                <button class="buyButton" id="buyButton">Finalizar compra</button>
+            </section>
         </section>
     </header>
     <main id="mainpage">
         <section class="booksGrid" id="booksGrid">
         </section>
-        <section class="pageButtons" id="paginationButtons">
-            <button class="pageBut" id="prevB">
+        <section class="pageBtnsSection" id="paginationButtons">
+            <button class="pageBtn" id="prevB">
                 << Prev Page</button>
-                    <button class="pageBut" id="nextB">Next page >></button>
+                    <button class="pageBtn" id="nextB">Next page >></button>
         </section>
     </main>
     <script src="script.js"></script>

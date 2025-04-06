@@ -8,10 +8,15 @@ searchBtn.addEventListener("click", userSearch);
 const filterForm = document.getElementById("filterForm");
 filterForm.addEventListener("change", changeInputPlaceholder);
 
-const openCart = document.getElementById("buyButton");
+const cartUserBooks = document.getElementById("cartContent");
+const emptyText = document.getElementById("cartEmpty");
+const openCart = document.getElementById("cartButton");
 openCart.addEventListener("click", openCartPage);
 const closeCart = document.getElementById("closeCart");
 closeCart.addEventListener("click", closeCartPage);
+const buyBtn = document.getElementById("buyButton");
+buyBtn.addEventListener("click", buyBooks);
+const purchasePrice = document.getElementById("purchasePrice");
 
 const gridBooks = document.getElementById("booksGrid");
 const cartBox = document.getElementById("cartBox");
@@ -23,6 +28,7 @@ const booksLimitPage = "limit=24";
 let userInput;
 let numPage = 1;
 let userInputUrl;
+let totalPrice = 0;
 
 async function userSearch(){
     if (inputSearch.value == ""){
@@ -81,71 +87,192 @@ function createBookCard(book) {
     const bookInfo = document.createElement("section");
     bookInfo.setAttribute("class", "bookInfo");
 
-    const bookName = document.createElement("h3");
-    bookName.innerText = `${book.title}`;
+    const bookTitle = document.createElement("h3");
+    bookTitle.innerText = `${book.title}`;
     const bookAuthorYear = document.createElement("p");
     bookAuthorYear.innerText = `${book.author_name[0]} (${book.first_publish_year})`;
     const bookPrice =  document.createElement("p");
     bookPrice.setAttribute("class", "bookPrice");
     const price = Math.floor(Math.random() * (30 - 20 + 1) + 20)
     bookPrice.innerText = `${price}€`;
+    const bookID = book.key.split("/").pop();
 
     const addCartBtn = document.createElement("button");
     addCartBtn.setAttribute("class", "addCartBook");
-    addCartBtn.setAttribute("id", book.title)
+    addCartBtn.setAttribute("id", bookTitle.innerText);
     addCartBtn.innerText = "Añadir al carrito";
-    addCartBtn.addEventListener("click", () => addBookToCart(addCartBtn.id, price, bookCoverURL));
+    addCartBtn.addEventListener("click", () => addBookToCart(addCartBtn.id, price, bookCoverURL, bookID));
 
-    bookInfo.append(bookName, bookAuthorYear, bookPrice, addCartBtn);
+    bookInfo.append(bookTitle, bookAuthorYear, bookPrice, addCartBtn);
     bookBox.append(bookCover, bookInfo);
     gridBooks.append(bookBox);
 }
 
-function addBookToCart(bookID, price, bookCoverURL) {
 
+function addBookToCart(addCartID, price, bookCoverURL, bookID) {
     let userCart = localStorage.getItem("usercart");
 
     let cartBooks = userCart ? JSON.parse(userCart) : [];
 
-    const bookIndexArray = cartBooks.findIndex(book => book.bookname === bookID) //Retorna su indice y si no lo encuentra devulve un -1
+    const bookIndexArray = cartBooks.findIndex(book => book.bookname === addCartID) //Retorna su indice y si no lo encuentra devulve un -1
 
     if (bookIndexArray > -1) {
         cartBooks[bookIndexArray].quantity += 1
     } else {
         const addBook = {
-            bookname: bookID,
+            bookname: addCartID,
             quantity: 1,
             price: price,
-            cartimg: `${bookCoverURL}-S.jpg`
+            cartimg: `${bookCoverURL}-M.jpg`,
+            id: bookID
         };
         cartBooks.push(addBook)
     }
 
     localStorage.setItem("usercart", JSON.stringify(cartBooks))
-
+    insertCartBooks();
 
     console.log("cart update", cartBooks)
-    // if (!localStorage.getItem("usercart")) {
-    //     cartBooks.push(addBook);
-    //     localStorage.setItem("usercart", JSON.stringify(cartBooks));
-    // }
-    // else {
-    //     const userCart = JSON.parse(localStorage.getItem("usercart"));
-
-    //     userCart.forEach(book => {
-    //         if (book.bookname !== bookID) {
-    //             book.quantity += 1;
-
-    //             localStorage.setItem("usercart", JSON.stringify(userCart));
-    //         }
-    //         else {
-    //             userCart.push(addBook);
-    //             localStorage.setItem("usercart", JSON.stringify(userCart));
-    //         }
-    //     });
-    // }
 }
 
+function insertCartBooks() {    
+    if (localStorage.getItem("usercart")) {
+
+        const userCart = JSON.parse(localStorage.getItem("usercart"));
+
+        checkCartContent(userCart);
+
+        cartUserBooks.innerHTML = "";
+        userCart.forEach(book => {
+            createBookCardCart(book);
+        });
+    }
+
+    calcPrice();
+}
+
+function rechargeCart(userCart){
+    localStorage.setItem("usercart", JSON.stringify(userCart));
+    insertCartBooks();
+}
+
+function checkCartContent(userCart){
+    if (userCart.length > 0){
+        emptyText.innerText = "";
+    }
+    else{
+        emptyText.innerText = "Tu carrito esta vacio";
+    }
+}
+
+function createBookCardCart(book) {
+    const bookCartCard = document.createElement("article");
+    bookCartCard.setAttribute("class", "bookCartCard");
+    const bookCartInfoBox = document.createElement("section");
+    bookCartInfoBox.setAttribute("class", "bookCartInfoBox");
+
+    const cartBookCover = document.createElement("img");
+    cartBookCover.setAttribute("class", "cartBookCover");
+    cartBookCover.src = `${book.cartimg}`;
+
+    const cartBookInfo = document.createElement("section");
+    cartBookInfo.setAttribute("class", "cartBookInfo");
+
+    const cartBookName = document.createElement("h3");
+    cartBookName.innerText = `${book.bookname}`;
+    const cartBookPrice = document.createElement("p");
+    cartBookPrice.innerText = `${book.price}€`;
+
+    const quantityBookSelector = document.createElement("section");
+    quantityBookSelector.setAttribute("class", "quantityBookSelector");
+
+    const substractBook = document.createElement("button");
+    substractBook.setAttribute("class", "quantityBtns");
+    substractBook.setAttribute("id", `sub${book.id}`);
+    substractBook.innerText = "-";
+    substractBook.addEventListener("click", () => subsBook(book.id));
+    const sumBook = document.createElement("button");
+    sumBook.setAttribute("class", "quantityBtns");
+    sumBook.setAttribute("id", `sum${book.id}`);
+    sumBook.innerText = "+";
+    sumBook.addEventListener("click", () => addBook(book.id));
+    const cartBookQuantity = document.createElement("p");
+    cartBookQuantity.setAttribute("class", "cartBookQuantity");
+    cartBookQuantity.innerText = `${book.quantity}`;
+
+    quantityBookSelector.append(substractBook, cartBookQuantity, sumBook);
+
+    const removeBookBtn = document.createElement("button");
+    removeBookBtn.setAttribute("class", "removeBook");
+    removeBookBtn.innerText = "X";
+    removeBookBtn.addEventListener("click", () => removeCartBook(book.id));
+
+    
+    cartBookInfo.append(cartBookName, cartBookPrice, quantityBookSelector);
+    bookCartInfoBox.append(cartBookCover, cartBookInfo);
+    bookCartCard.append(bookCartInfoBox, removeBookBtn);
+    cartUserBooks.append(bookCartCard);
+}
+
+function removeCartBook(bookID){
+    const userCart = JSON.parse(localStorage.getItem("usercart"));
+
+    userCart.forEach(book => {
+        if (book.id == bookID){
+            userCart.splice(userCart.indexOf(book), 1);
+        }
+    })
+
+    rechargeCart(userCart);
+}
+
+function subsBook(bookID){
+    const userCart = JSON.parse(localStorage.getItem("usercart"));
+
+    userCart.forEach(book => {
+        if (book.id == bookID){
+            if (book.quantity > 1){
+                book.quantity -= 1;
+            }
+        }
+    })
+
+    rechargeCart(userCart);
+}
+
+function addBook(bookID){
+    const userCart = JSON.parse(localStorage.getItem("usercart"));
+
+    userCart.forEach(book => {
+        if (book.id == bookID){
+            book.quantity += 1;
+        }
+    })
+
+    rechargeCart(userCart);
+}
+
+
+function calcPrice(){
+    const userCart = JSON.parse(localStorage.getItem("usercart"));
+
+    totalPrice = 0;
+
+    userCart.forEach(book => {
+        totalPrice += book.price * book.quantity;
+    })
+
+    purchasePrice.innerText = `Total: ${totalPrice}€`;
+}
+
+function buyBooks(){
+    if (totalPrice == 0){
+        alert("No hay nada en tu carrito para comprar");
+    }
+    else{
+        alert(`Gracias por tu compra, tu total es de ${purchasePrice.innerText}`);
+    }
+}
 
 const nextPageButton = document.getElementById("nextB")
 nextPageButton.addEventListener("click", toNextPage);
@@ -213,3 +340,5 @@ function openCartPage() {
 function closeCartPage() {
     cartBox.style.display = "none";
 }
+
+insertCartBooks();
