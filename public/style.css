@@ -366,16 +366,18 @@ main {
     background-color: gray;
     color: white;
 }
-#booksQuantity{
-    font-size: 8px;
-    color: black;
-    font-family: Arial, Helvetica, sans-serif;
-    padding: 5px;
-}
+
 .numCartBooks{
     align-items: flex-start;
     display: flex;
     flex-flow: row nowrap;
+}
+
+#booksQuantity{
+    font-size: 1rem;
+    color: black;
+    font-family: Arial, Helvetica, sans-serif;
+    padding: 5px;
 }
 
 @media only screen and (max-width: 850px) { 
